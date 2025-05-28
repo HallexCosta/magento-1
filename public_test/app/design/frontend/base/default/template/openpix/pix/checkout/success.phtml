@@ -1,0 +1,30 @@
+<?php
+$orderId = Mage::getSingleton("checkout/session")->getLastOrderId();
+$order = Mage::getModel("sales/order")->load($orderId);
+
+$payment = $order->getPayment();
+
+$isOpenPixPaymentMethod = substr($payment->getMethod(), 0, 11) === "openpix_pix";
+
+if ($orderId && $isOpenPixPaymentMethod) { ?>
+    <div class="buttons-set">
+        <?php
+        $correlationID = $order->getData("openpix_correlationid");
+        $appID = Mage::helper("openpix_pix")->getAppID();
+        $pluginUrl = Mage::helper(
+            "openpix_pix/config"
+        )->getOpenPixPluginUrlScript();
+
+        $src =
+            $pluginUrl .
+            "?appID=" .
+            $appID .
+            "&correlationID=" .
+            $correlationID .
+            "&node=openpix-order";
+        ?>
+        <script policy id="script-src" src="<?php echo $src; ?>" async></script>
+        <div id="openpix-order"></div>
+    </div>
+    <?php }
+?>

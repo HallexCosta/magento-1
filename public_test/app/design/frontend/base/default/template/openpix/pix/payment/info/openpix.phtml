@@ -1,0 +1,60 @@
+<p><?php echo $this->getMethod()->getTitle(); ?></p><br>
+
+<?php
+$info = $this->getInfo();
+$isSendingEmail =
+    $this->getIsSendingEmail() !== null && $this->getIsSendingEmail() == 1;
+
+$order = $info->getOrder();
+
+if ($order && $order->getState() != "pending") {
+    $payment = $order->getPayment();
+
+    $correlationID = $order->getData("openpix_correlationid");
+    $appID = Mage::helper("openpix_pix")->getAppID();
+    $pluginUrl = Mage::helper(
+        "openpix_pix/config"
+    )->getOpenPixPluginUrlScript();
+
+    $src =
+        $pluginUrl .
+        "?appID=" .
+        $appID .
+        "&correlationID=" .
+        $correlationID .
+        "&node=openpix-order";
+
+    $isPixPayment = substr($payment->getMethod(), 0, 11) === "openpix_pix";
+
+    if ($isPixPayment) { ?>
+            <?php if (!$isSendingEmail) { ?>
+                <script policy id="script-src" src="<?php echo $src; ?>" async></script>
+                <div id="openpix-order"></div>
+            <?php } else { ?>
+            <div class='flex-column-center'>
+                <img
+                    class='openpix-qrcode-image'
+                    title='QRCode Pix deste pedido.'
+                    src="<?= $info->getAdditionalInformation(
+                        "openpix_qrcodeimage"
+                    ) . "?size=600" ?>"
+                    width='200px'
+                    />
+            </div>
+            <style>
+                .flex-column-center {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .openpix-qrcode-image {
+                    width: 200px !important;
+                }
+            </style>
+            <?php } ?>
+        <?php }
+}
+
+
+?>

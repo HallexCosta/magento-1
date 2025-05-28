@@ -1,0 +1,19 @@
+<script type="text/javascript">
+    //<![CDATA[
+    function openpixPrepareOneclick() {
+        new Ajax.Request("<?php echo $this->getAjaxPrepareOneclickUrl() ?>", {
+            method: "get",
+            onSuccess: function (transport) {
+                var responseJSON = transport.responseJSON || {};
+                var redirect_url = responseJSON.redirect_url || "";
+
+                if (redirect_url) {
+                    window.open(redirect_url, "_blank");
+                }
+            },
+        });
+    }
+    //]]>
+</script>
+
+<?php echo $this->getButtonHtml() ?>

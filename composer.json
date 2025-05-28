@@ -1,0 +1,32 @@
+{
+    "name": "openmage/composer-test",
+    "description": "OpenMage starter project",
+    "type": "project",
+    "license": "OSL-3.0",
+    "minimum-stability": "dev",
+    "require": {
+        "aydin-hassan/magento-core-composer-installer": "^2.1.0",
+        "openmage/magento-lts": "^20.13"
+    },
+    "extra": {
+        "magento-root-dir": "public_test",
+        "enable-patching": "true",
+        "magento-core-package-type": "magento-source"
+    },
+    "repositories": {
+        "firegento": {
+            "type": "composer",
+            "url": "https://packages.firegento.com"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "cweagans/composer-patches": true,
+            "magento-hackathon/magento-composer-installer": true,
+            "openmage/composer-plugin": true,
+            "aydin-hassan/magento-core-composer-installer": true,
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
