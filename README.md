@@ -22,6 +22,36 @@ This repository contains a Magento 1.x project using OpenMage LTS. Below you'll 
   - iconv
   - mbstring
 
+### Installing DDEV
+
+1. Add DDEV's GPG key to your keyring:
+```bash
+curl -fsSL https://pkg.ddev.com/apt/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/ddev.gpg > /dev/null
+sudo chmod a+r /etc/apt/keyrings/ddev.gpg
+```
+
+2. Add DDEV releases to your package repository:
+```bash
+echo "deb [signed-by=/etc/apt/keyrings/ddev.gpg] https://pkg.ddev.com/apt/ * *" | sudo tee /etc/apt/sources.list.d/ddev.list >/dev/null
+```
+
+3. Update package information and install DDEV:
+```bash
+sudo apt-get update && sudo apt-get install -y ddev
+```
+
+4. Initialize mkcert (one-time setup):
+```bash
+mkcert -install
+```
+
+5. Alternative installation method using install script:
+```bash
+curl -fsSL https://ddev.com/install.sh | bash
+```
+> [!NOTE]
+> Reference link how to install DDEV: https://ddev.readthedocs.io/en/stable/users/install/ddev-installation/#linux
+
 ## Initial Setup
 
 1. Clone the repository:
